@@ -1,0 +1,69 @@
+# Anomaly Detection Benchmark Configuration
+
+# Data settings
+data:
+  raw_path: "data/raw"
+  processed_path: "data/processed"
+  results_path: "data/results"
+  test_size: 0.2
+  val_size: 0.1
+  random_state: 42
+
+# Model hyperparameters
+models:
+  isolation_forest:
+    n_estimators: 100
+    max_samples: "auto"
+    contamination: 0.1  # Will be tuned
+    random_state: 42
+
+  one_class_svm:
+    kernel: "rbf"
+    gamma: "scale"
+    nu: 0.1  # Will be tuned (represents upper bound on fraction of outliers)
+
+  lof:
+    n_neighbors: 20
+    contamination: 0.1  # Will be tuned
+    algorithm: "auto"
+    metric: "minkowski"
+
+  autoencoder:
+    architecture:
+      input_dim: null  # Will be set from data
+      hidden_dims: [64, 32]
+      latent_dim: 16
+    training:
+      epochs: 100
+      batch_size: 256
+      learning_rate: 0.001
+      early_stopping_patience: 10
+      device: "cuda"  # or "cpu"
+
+# Ensemble settings
+ensemble:
+  voting:
+    method: "average"  # Options: "average", "majority"
+
+  stacking:
+    meta_model: "LogisticRegression"
+    cv_folds: 5
+
+# Evaluation settings
+evaluation:
+  target_fpr: 0.01  # Target false positive rate for threshold optimization
+  contamination_range: [0.01, 0.05, 0.1, 0.15, 0.2]
+  metrics:
+    - "detection_rate"
+    - "false_positive_rate"
+    - "precision"
+    - "recall"
+    - "f1"
+    - "auc_roc"
+    - "auc_pr"
+
+# Visualization settings
+visualization:
+  save_plots: true
+  plot_format: "png"
+  dpi: 300

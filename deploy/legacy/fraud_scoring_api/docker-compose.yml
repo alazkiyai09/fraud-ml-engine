@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  # Fraud Scoring API
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fraud_scoring_api
+    ports:
+      - "${API_PORT:-8000}:8000"
+    environment:
+      # API Configuration
+      - APP_NAME=${APP_NAME:-Fraud Scoring API}
+      - APP_VERSION=${APP_VERSION:-1.0.0}
+      - API_HOST=0.0.0.0
+      - API_PORT=${API_PORT:-8000}
+      - DEBUG=${DEBUG:-false}
+
+      # Model Paths
+      - MODEL_PATH=/app/model_artifacts/model.pkl
+      - PIPELINE_PATH=/app/model_artifacts/pipeline.pkl
+
+      # Redis Configuration
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_DB=${REDIS_DB:-0}
+      - CACHE_TTL_SECONDS=${CACHE_TTL_SECONDS:-300}
+
+      # Security
+      - API_KEYS=${API_KEYS:-["test-key-dev","test-key-prod"]}
+      - RATE_LIMIT_REQUESTS=${RATE_LIMIT_REQUESTS:-100}
+      - RATE_LIMIT_WINDOW_SECONDS=${RATE_LIMIT_WINDOW_SECONDS:-60}
+
+      # Logging
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - fraud_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: fraud_redis
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - fraud_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+networks:
+  fraud_network:
+    driver: bridge
+
+volumes:
+  redis_data:
+    driver: local

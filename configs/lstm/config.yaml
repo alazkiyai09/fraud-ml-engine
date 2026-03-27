@@ -1,0 +1,64 @@
+# LSTM Fraud Detection Configuration
+
+# Data paths
+data:
+  raw_path: "data/raw"
+  processed_path: "data/processed"
+
+# Sequence parameters
+sequence:
+  max_sequence_length: 10  # Number of historical transactions to consider
+  min_sequence_length: 3   # Minimum transactions required to create a sequence
+
+# Model architecture
+model:
+  input_dim: 20  # Will be updated based on actual features
+  hidden_dim: 128
+  num_layers: 2
+  num_heads: 4
+  dropout: 0.3
+  bidirectional: true
+
+# Baseline model (single transaction)
+baseline:
+  hidden_dims: [128, 64]
+  dropout: 0.3
+
+# Training parameters
+training:
+  batch_size: 64
+  num_epochs: 50
+  learning_rate: 0.001
+  weight_decay: 1e-5
+  early_stopping_patience: 10
+  gradient_clip_value: 1.0
+
+# Data split ratios (temporal)
+split:
+  train_ratio: 0.7
+  val_ratio: 0.15
+  # test_ratio = 1 - train_ratio - val_ratio = 0.15
+
+# Class weights for imbalanced data
+class_weights:
+  enabled: true
+  method: "inverse"  # "inverse" or "balanced"
+
+# Evaluation metrics
+metrics:
+  primary: "auc_pr"  # Area under Precision-Recall curve
+  additional: ["accuracy", "precision", "recall", "f1", "auc_roc"]
+
+# Checkpointing
+checkpoint:
+  save_best_only: true
+  monitor: "val_auc_pr"
+  mode: "max"
+
+# ONNX export
+onnx:
+  enabled: true
+  opset_version: 17
+
+# Random seed for reproducibility
+seed: 42
