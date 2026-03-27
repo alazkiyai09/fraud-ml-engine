@@ -1,0 +1,13 @@
+model:
+  family: ensemble
+  classical:
+    enabled: true
+    models: [xgboost, lightgbm, random_forest, logistic_regression]
+  lstm:
+    enabled: true
+  anomaly:
+    enabled: true
+thresholds:
+  low_risk: 0.30
+  medium_risk: 0.60
+  high_risk: 0.85

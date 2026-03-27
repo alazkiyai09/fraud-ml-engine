@@ -1,0 +1,10 @@
+experiment:
+  name: fraud-model-benchmark
+  seed: 42
+  folds: 5
+data:
+  split: temporal
+  test_size: 0.2
+  batch_size: 256
+tracking:
+  metrics: [auc, f1, precision, recall, auprc]

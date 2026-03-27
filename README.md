@@ -1,26 +1,39 @@
-# fraud-ml-engine
+# Fraud Detection ML Engine (`fraud-ml-engine`)
 
-End-to-end fraud detection ML engine split out of `fl-security-research`.
+End-to-end **fraud detection machine learning system** with feature engineering, model benchmarking, explainable AI, and production API serving. Built for teams shipping real-time transaction risk scoring and model observability.
 
-This repo consolidates the original fraud-focused projects into one structure:
+## Why This Repository
 
-- `src/eda/` for the interactive dashboard
-- `src/features/` for fraud feature engineering
-- `src/models/` for classical, LSTM, and anomaly models
-- `src/explainability/` for SHAP/LIME tooling
-- `src/api/` for the unified FastAPI surface
+Fraud stacks usually fragment EDA, feature pipelines, model training, explainability, and inference APIs. `fraud-ml-engine` brings them into one operational repository.
 
-Preserved project implementations remain in place under the new layout, especially in `legacy/` folders where the original source tree needed to be embedded with minimal disturbance.
+## Core Features
 
-## Legacy Sources Merged
+- Feature engineering for velocity, deviation, and merchant risk
+- Classical model benchmark surfaces (XGBoost, LightGBM, sklearn family)
+- LSTM and anomaly-model integrations
+- Explainability surfaces (SHAP/LIME utility layers)
+- Unified prediction API with benchmark and explanation routes
+- Config, notebook, and test scaffolds for repeatable ML workflows
 
-- `fraud_detection_eda_dashboard`
-- `imbalanced_classification_benchmark`
-- `fraud_feature_engineering`
-- `fraud_scoring_api`
-- `lstm_fraud_detection`
-- `anomaly_detection_benchmark`
-- `fraud_model_explainability`
+## Project Structure
+
+- `src/features/`: feature extraction and transformation modules
+- `src/models/`: classical, LSTM, anomaly, and ensemble interfaces
+- `src/explainability/`: explanation utilities and narrative helpers
+- `src/eda/`: dashboard app and visualization/callback surfaces
+- `src/api/`: unified FastAPI service + legacy compatibility app
+- `src/core/`: shared config, data-loading, metrics, model base classes
+
+## API Endpoints
+
+- `POST /api/v1/predict`
+- `POST /api/v1/batch_predict`
+- `POST /api/v1/explain/{id}`
+- `POST /api/v1/benchmark/run`
+- `GET /api/v1/benchmark/results`
+- `GET /api/v1/model_info`
+- `GET /api/v1/health`
+- `GET /metrics`
 
 ## Quick Start
 
@@ -29,8 +42,12 @@ pip install -r requirements.txt
 uvicorn src.api.main:app --reload
 ```
 
-## Smoke Test
+## Tests
 
 ```bash
 pytest -q tests/test_api.py
 ```
+
+## SEO Keywords
+
+fraud detection machine learning, fraud scoring api, xgboost fraud model, feature engineering for fraud, anomaly detection fraud, explainable fraud ai, fastapi fraud detection
