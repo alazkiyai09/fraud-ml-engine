@@ -1,30 +1,52 @@
-# Fraud Detection ML Engine (`fraud-ml-engine`)
+<div align="center">
 
-End-to-end **fraud detection machine learning system** with feature engineering, model benchmarking, explainable AI, and production API serving. Built for teams shipping real-time transaction risk scoring and model observability.
+# 🛡️ Fraud ML Engine
 
-## Why This Repository
+### Feature Engineering • Model Benchmarking • Explainability • Real-Time Scoring
 
-Fraud stacks usually fragment EDA, feature pipelines, model training, explainability, and inference APIs. `fraud-ml-engine` brings them into one operational repository.
+[![Python](https://img.shields.io/badge/Python-3.12+-blue.svg)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi)](https://fastapi.tiangolo.com/)
+[![XGBoost](https://img.shields.io/badge/XGBoost-EC6A00?style=flat)](https://xgboost.readthedocs.io/)
+[![LightGBM](https://img.shields.io/badge/LightGBM-9ACD32?style=flat)](https://lightgbm.readthedocs.io/)
 
-## Core Features
+[Overview](#-overview) • [About](#-about) • [Topics](#-topics) • [API](#-api-surfaces) • [Quick Start](#-quick-start)
 
-- Feature engineering for velocity, deviation, and merchant risk
-- Classical model benchmark surfaces (XGBoost, LightGBM, sklearn family)
-- LSTM and anomaly-model integrations
-- Explainability surfaces (SHAP/LIME utility layers)
-- Unified prediction API with benchmark and explanation routes
-- Config, notebook, and test scaffolds for repeatable ML workflows
+---
 
-## Project Structure
+End-to-end fraud detection ML system combining **feature pipelines**, **classical/deep/anomaly models**, **explainability**, and **production API delivery**.
 
-- `src/features/`: feature extraction and transformation modules
-- `src/models/`: classical, LSTM, anomaly, and ensemble interfaces
-- `src/explainability/`: explanation utilities and narrative helpers
-- `src/eda/`: dashboard app and visualization/callback surfaces
-- `src/api/`: unified FastAPI service + legacy compatibility app
-- `src/core/`: shared config, data-loading, metrics, model base classes
+</div>
 
-## API Endpoints
+---
+
+## 🎯 Overview
+
+`fraud-ml-engine` supports full model lifecycle:
+
+- Feature engineering for transaction risk signals
+- Benchmarking across multiple model families
+- Explainability with SHAP/LIME-ready outputs
+- API-based scoring and benchmark endpoints
+
+## 📌 About
+
+- Built to centralize fraud model experimentation and serving
+- Suitable for iterative model development and production integration
+- Includes notebooks, configs, and tests for reproducibility
+
+## 🏷️ Topics
+
+`fraud-detection` `machine-learning` `xgboost` `lightgbm` `feature-engineering` `explainable-ai` `fastapi` `risk-scoring`
+
+## 🧩 Architecture
+
+- `src/features/`: velocity, deviation, merchant risk transformations
+- `src/models/`: classical, LSTM, anomaly, ensemble modules
+- `src/explainability/`: SHAP/LIME tooling
+- `src/eda/`: dashboard and visualization logic
+- `src/api/`: prediction and benchmark APIs
+
+## 🌐 API Surfaces
 
 - `POST /api/v1/predict`
 - `POST /api/v1/batch_predict`
@@ -35,19 +57,22 @@ Fraud stacks usually fragment EDA, feature pipelines, model training, explainabi
 - `GET /api/v1/health`
 - `GET /metrics`
 
-## Quick Start
+## ⚡ Quick Start
 
 ```bash
 pip install -r requirements.txt
 uvicorn src.api.main:app --reload
 ```
 
-## Tests
+## 🧪 Test
 
 ```bash
 pytest -q tests/test_api.py
 ```
 
-## SEO Keywords
+## 🛠️ Tech Stack
 
-fraud detection machine learning, fraud scoring api, xgboost fraud model, feature engineering for fraud, anomaly detection fraud, explainable fraud ai, fastapi fraud detection
+**ML:** scikit-learn, XGBoost, LightGBM, PyTorch  
+**API:** FastAPI, Pydantic, Uvicorn  
+**XAI:** SHAP, LIME  
+**Visualization:** Plotly, Streamlit
